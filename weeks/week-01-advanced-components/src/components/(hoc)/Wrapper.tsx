@@ -1,13 +1,24 @@
-function WithAuth(Component) {
-   const isLoggedIn = false;
+import React, { ComponentType } from "react";
+
+// Define the type for the props
+interface WithAuthProps {
+   // You can define the props here if necessary, but for now we use `Record<string, unknown>` to allow any props
+   [key: string]: unknown;
+}
+
+// HOC to wrap the component with authentication logic
+function WithAuth<P extends WithAuthProps>(Component: ComponentType<P>) {
+   const isLoggedIn = true;
 
    if (isLoggedIn) {
-      return (props): JSX.Element => {
+      // Return a component that renders the passed component with props
+      return (props: P): JSX.Element => {
          return <Component {...props} />;
       };
    }
 
-   return (props): JSX.Element => {
+   // Return a component that displays a message when not logged in
+   return (props: P): JSX.Element => {
       return (
          <div>
             <h1>You are yet to login</h1>
@@ -16,6 +27,7 @@ function WithAuth(Component) {
    };
 }
 
+// Define the LoggedIn component
 function LoggedIn() {
    return (
       <div>
@@ -25,5 +37,6 @@ function LoggedIn() {
    );
 }
 
+// Wrap the LoggedIn component with the WithAuth HOC
 export const ProtectedRoute = WithAuth(LoggedIn);
 export default WithAuth;
