@@ -38,6 +38,7 @@ Accordion.Header = ({ id, children }: { id: number; children: ReactNode }) => {
             // Update Persisting local storage
             localStorage.setItem("index", `${id}`);
          }}
+         className="tab"
       >
          {children}
       </button>
@@ -50,7 +51,7 @@ Accordion.Description = ({ id, children }: { id: number; children: ReactNode }) 
 
    console.log(isActive);
 
-   return <div className={isActive ? "ac-active" : "ac-close"}>{children}</div>;
+   return <div className={`desc ${isActive ? "ac-active" : "ac-close"}`}>{children}</div>;
 };
 
 export default Accordion;
